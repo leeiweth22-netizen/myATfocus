@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>🥑 Pomodoro 50/10 | Học tập + Nhạc YouTube</title>
+    <title>🎨 Pomodoro | Màu Pastel theo Video</title>
     <style>
         * {
             margin: 0;
@@ -11,14 +11,25 @@
             box-sizing: border-box;
         }
 
-        body {
-            min-height: 100vh;
-            background: linear-gradient(145deg, #d8f0d0 0%, #c2e0b8 100%);
-            font-family: 'Segoe UI', 'Quicksand', 'Poppins', system-ui, sans-serif;
-            padding: 24px;
+        :root {
+            --primary-bg-start: #d8f0d0;
+            --primary-bg-end: #c2e0b8;
+            --card-bg: #fafff2e6;
+            --btn-pastel: #e1ffce;
+            --btn-pastel-hover: #cde6bc;
+            --accent-dark: #2c6b29;
+            --timer-bg: #ffffff;
+            --status-bg: #cbe8ba;
         }
 
-        /* container chia đôi */
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, var(--primary-bg-start) 0%, var(--primary-bg-end) 100%);
+            font-family: 'Segoe UI', 'Quicksand', 'Poppins', system-ui, sans-serif;
+            padding: 24px;
+            transition: background 0.4s ease;
+        }
+
         .pomodoro-wrapper {
             display: flex;
             flex-wrap: wrap;
@@ -27,85 +38,100 @@
             margin: 0 auto;
         }
 
-        /* bên trái - đồng hồ pomodoro */
         .pomodoro-panel {
             flex: 1.2;
             min-width: 320px;
-            background: #fafff2e6;
+            background: var(--card-bg);
             backdrop-filter: blur(4px);
             border-radius: 70px;
             padding: 28px 24px;
-            box-shadow: 0 25px 45px #6c905240;
-            border: 1px solid #e4ffcf;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.1);
+            border: 1px solid var(--btn-pastel);
+            transition: all 0.3s ease;
         }
 
-        /* bên phải - nhạc */
         .music-panel {
             flex: 1.8;
             min-width: 350px;
-            background: #fafff2e6;
+            background: var(--card-bg);
             backdrop-filter: blur(4px);
             border-radius: 70px;
             padding: 28px 24px;
-            box-shadow: 0 25px 45px #6c905240;
-            border: 1px solid #e4ffcf;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.1);
+            border: 1px solid var(--btn-pastel);
+            transition: all 0.3s ease;
         }
 
         .chip-title {
-            display: inline-block;
-            background: #e1ffce;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--btn-pastel);
             padding: 6px 20px;
             border-radius: 60px;
             font-size: 1.2rem;
             font-weight: 600;
-            color: #3a7434;
+            color: var(--accent-dark);
             margin-bottom: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 5px 5px 10px rgba(0,0,0,0.05), -3px -3px 8px rgba(255,255,255,0.5);
+        }
+
+        .dynamic-icon {
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
         }
 
         .status-badge {
-            background: #cbe8ba;
-            display: inline-block;
+            background: var(--status-bg);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             padding: 5px 18px;
             border-radius: 50px;
             font-size: 0.85rem;
             font-weight: 500;
-            color: #2c6428;
+            color: var(--accent-dark);
             margin-left: 10px;
+            transition: all 0.3s ease;
+            box-shadow: inset 1px 1px 3px rgba(0,0,0,0.05), inset -1px -1px 3px rgba(255,255,255,0.4);
         }
 
         .big-clock {
             font-size: 5.8rem;
             font-weight: 800;
-            font-family: 'Fira Mono', 'Courier New', monospace;
+            font-family: 'Fira Mono', monospace;
             text-align: center;
             letter-spacing: 8px;
-            background: #fffff5;
+            background: #ffffff;
             padding: 35px 15px;
             border-radius: 90px;
-            color: #2c6b29;
+            color: var(--accent-dark);
             margin: 15px 0;
-            box-shadow: inset 0 2px 5px #c1dbaa, 0 8px 16px rgba(0,0,0,0.02);
+            box-shadow: 8px 8px 16px rgba(0,0,0,0.08), -6px -6px 12px rgba(255,255,255,0.6);
+            transition: all 0.3s ease;
         }
 
         .goal-row {
             display: flex;
             justify-content: space-between;
-            align-items: baseline;
-            background: #eefce4;
+            background: #ffffff;
             padding: 12px 20px;
             border-radius: 60px;
             margin: 15px 0;
+            transition: all 0.3s ease;
+            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.05), inset -2px -2px 5px rgba(255,255,255,0.4);
         }
 
         .goal-label {
             font-weight: 600;
-            color: #497a42;
+            color: var(--accent-dark);
         }
 
         .goal-number {
             font-size: 1.8rem;
             font-weight: 700;
-            color: #2b6827;
+            color: var(--accent-dark);
             font-family: monospace;
         }
 
@@ -117,32 +143,34 @@
             flex-wrap: wrap;
         }
 
+        /* NÚT BẤM PASTEL SÁNG - ĐỔI MÀU THEO VIDEO */
         .btn {
             border: none;
-            background: #e3f3d6;
-            padding: 10px 28px;
-            border-radius: 50px;
-            font-weight: 600;
+            padding: 12px 32px;
+            border-radius: 60px;
+            font-weight: 700;
             font-size: 1rem;
             cursor: pointer;
-            color: #2c6b28;
-            transition: 0.1s;
+            transition: all 0.2s ease;
+            background: var(--btn-pastel);
+            color: var(--accent-dark);
+            box-shadow: 6px 6px 12px rgba(0,0,0,0.08), -4px -4px 8px rgba(255,255,255,0.5);
+        }
+
+        .btn:active {
+            transform: translateY(2px);
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.08), -2px -2px 5px rgba(255,255,255,0.3);
         }
 
         .btn-primary {
-            background: #8fc183;
-            color: white;
-            box-shadow: 0 3px 6px #7d9e6840;
+            background: linear-gradient(145deg, var(--btn-pastel), var(--btn-pastel-hover));
+            color: var(--accent-dark);
         }
 
-        .btn-primary:hover {
-            background: #76a768;
-            transform: scale(0.97);
-        }
-
-        .btn:hover {
-            background: #cde6bc;
+        .btn-primary:hover, .btn:hover:not(.btn-primary) {
+            background: var(--btn-pastel-hover);
             transform: translateY(-2px);
+            box-shadow: 8px 8px 16px rgba(0,0,0,0.12), -4px -4px 8px rgba(255,255,255,0.4);
         }
 
         .preset-grid {
@@ -154,20 +182,26 @@
         }
 
         .preset-btn {
-            background: #edffe1;
+            background: var(--btn-pastel);
             padding: 8px 20px;
             border-radius: 40px;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
-            border: 1px solid #cbe3b2;
-            font-size: 0.9rem;
-            transition: 0.1s;
+            border: none;
+            transition: all 0.2s ease;
+            color: var(--accent-dark);
+            box-shadow: 4px 4px 8px rgba(0,0,0,0.06), -2px -2px 6px rgba(255,255,255,0.4);
+        }
+
+        .preset-btn:active {
+            transform: translateY(1px);
+            box-shadow: 2px 2px 4px rgba(0,0,0,0.06), -1px -1px 3px rgba(255,255,255,0.3);
         }
 
         .preset-btn.active {
-            background: #9bc88b;
-            color: white;
-            border-color: #6f9a5d;
+            background: var(--btn-pastel-hover);
+            color: var(--accent-dark);
+            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.1), inset -1px -1px 3px rgba(255,255,255,0.2), 3px 3px 8px rgba(0,0,0,0.1);
         }
 
         .switch-row {
@@ -182,23 +216,17 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            background: #eafbdf;
+            background: var(--btn-pastel);
             padding: 6px 16px;
             border-radius: 60px;
+            color: var(--accent-dark);
+            box-shadow: inset 1px 1px 3px rgba(0,0,0,0.05), inset -1px -1px 3px rgba(255,255,255,0.4);
         }
 
-        .switch-item input {
-            width: 18px;
-            height: 18px;
-            accent-color: #7db36b;
-            cursor: pointer;
-        }
-
-        /* music panel */
         .music-header {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #467a3f;
+            color: var(--accent-dark);
             margin-bottom: 20px;
             display: flex;
             justify-content: space-between;
@@ -219,48 +247,96 @@
             border: none;
             background: #fffff2;
             font-size: 0.9rem;
-            box-shadow: 0 0 0 1px #b9dc9b;
+            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.05), inset -1px -1px 3px rgba(255,255,255,0.5), 0 0 0 1px var(--btn-pastel);
             font-family: monospace;
+            outline: none;
         }
 
         .link-box button {
             flex: 1;
-            background: #8fc183;
+            background: var(--btn-pastel);
             border: none;
             border-radius: 60px;
             font-weight: bold;
-            color: white;
+            color: var(--accent-dark);
             cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 5px 5px 10px rgba(0,0,0,0.1), -2px -2px 6px rgba(255,255,255,0.3);
+        }
+
+        .link-box button:active {
+            transform: translateY(2px);
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
         }
 
         .iframe-card {
-            background: #cbe5bc;
+            background: rgba(0,0,0,0.05);
             border-radius: 48px;
             padding: 12px;
             margin: 15px 0;
+            box-shadow: inset 2px 2px 6px rgba(0,0,0,0.05), inset -2px -2px 6px rgba(255,255,255,0.3), 5px 5px 12px rgba(0,0,0,0.05);
         }
 
         iframe {
             width: 100%;
-            height: 400px;
+            height: 360px;
             border-radius: 40px;
             border: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
         .now-playing {
-            background: #e1f2d4;
+            background: var(--btn-pastel);
             border-radius: 48px;
             padding: 12px;
             text-align: center;
             font-size: 0.8rem;
-            color: #2f6d2b;
+            color: var(--accent-dark);
+            transition: all 0.3s ease;
+            box-shadow: inset 1px 1px 3px rgba(0,0,0,0.05), inset -1px -1px 3px rgba(255,255,255,0.4);
         }
 
         .tip {
             font-size: 11px;
             text-align: center;
             margin-top: 18px;
-            color: #6e9361;
+            color: var(--accent-dark);
+            opacity: 0.7;
+        }
+
+        .color-preview {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 10px;
+            font-size: 11px;
+            color: var(--accent-dark);
+        }
+
+        .toast-notify {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-dark);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 60px;
+            font-weight: bold;
+            z-index: 1000;
+            animation: slideUp 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
         }
 
         @media (max-width: 850px) {
@@ -269,7 +345,6 @@
             }
             .big-clock {
                 font-size: 3.5rem;
-                letter-spacing: 4px;
                 padding: 25px;
             }
             iframe {
@@ -281,64 +356,55 @@
 <body>
 
 <div class="pomodoro-wrapper">
-    <!-- PHẦN TRÁI: ĐỒNG HỒ POMODORO 50/10 + MỤC TIÊU -->
+    <!-- PHẦN TRÁI: ĐỒNG HỒ -->
     <div class="pomodoro-panel">
         <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;">
-            <span class="chip-title">🍅 Đồng Hồ Pomodoro</span>
-            <span class="status-badge" id="sessionStatus">🎵 Đang học tập</span>
+            <span class="chip-title">
+                <span class="dynamic-icon" id="dynamicIcon">🍅</span>
+                <span>Pomodoro</span>
+            </span>
+            <span class="status-badge" id="sessionStatus">
+                <span>🎵</span> Đang học
+            </span>
         </div>
-
-        <!-- đồng hồ lớn -->
         <div class="big-clock" id="timerDisplay">50:00</div>
-
-        <!-- mục tiêu -->
         <div class="goal-row">
-            <span class="goal-label">📌 Mục tiêu (phút):</span>
-            <span class="goal-number" id="goalMinutes">120</span>
+            <span class="goal-label">🎯 Mục tiêu (phút còn lại):</span>
+            <strong class="goal-number" id="goalMinutes">120</strong>
         </div>
-
-        <!-- nút điều khiển -->
         <div class="btn-group">
             <button class="btn btn-primary" id="startBtn">▶ Bắt đầu</button>
             <button class="btn" id="pauseBtn">⏸ Dừng</button>
             <button class="btn" id="resetBtn">🔄 Reset</button>
         </div>
-
-        <!-- preset thời gian học/nghỉ -->
         <div class="preset-grid">
             <div class="preset-btn" data-study="25" data-break="5">🍅 25/5</div>
             <div class="preset-btn active" data-study="50" data-break="10">🎯 50/10</div>
             <div class="preset-btn" data-study="15" data-break="3">⚡ 15/3</div>
             <div class="preset-btn" data-study="45" data-break="15">📚 45/15</div>
         </div>
-
-        <!-- tùy chọn: tự động nghỉ + âm thanh -->
         <div class="switch-row">
-            <label class="switch-item">
-                <input type="checkbox" id="autoBreakCheckbox" checked> 🔄 Tự động nghỉ
-            </label>
-            <label class="switch-item">
-                <input type="checkbox" id="soundCheckbox" checked> 🔊 Âm thanh
-            </label>
+            <label class="switch-item"><input type="checkbox" id="autoBreakCheckbox" checked> 🔄 Tự động nghỉ</label>
+            <label class="switch-item"><input type="checkbox" id="soundCheckbox" checked> 🔊 Âm thanh</label>
         </div>
-        <div class="tip" style="margin-top: 16px;">
-            💡 Cấu trúc <strong>50 học / 10 nghỉ</strong> • Mục tiêu 120 phút = 3 phiên hoàn thành
+        <div class="color-preview" id="colorPreview">
+            🎨 Màu pastel sẽ đổi theo video
         </div>
     </div>
 
-    <!-- PHẦN PHẢI: NHẠC YOUTUBE NHÚNG -->
+    <!-- PHẦN PHẢI: NHẠC -->
     <div class="music-panel">
         <div class="music-header">
-            <span>🎧 YouTube Music · không QC</span>
-            <span style="font-size: 0.7rem;">✨ nhúng trực tiếp</span>
+            <span>🎧 YouTube · màu pastel</span>
+            <span style="font-size: 0.7rem;">✨ đổi màu nút</span>
         </div>
         <div class="link-box">
-            <input type="text" id="youtubeLink" placeholder="Dán link YouTube hoặc ID (VD: 5qap5aO4i9A)" value="https://youtu.be/5qap5aO4i9A">
-            <button id="loadMusicBtn">🎵 Tải & phát</button>
+            <input type="text" id="youtubeLink" placeholder="Dán link YouTube hoặc ID video" value="https://youtu.be/5qap5aO4i9A">
+            <button id="loadMusicBtn">🎵 Tải & đổi màu</button>
         </div>
         <div class="iframe-card">
             <iframe id="youtubePlayer" 
-                    src="https://www.youtube.com/embed/5qap5aO4i9A?modestbranding=1&rel=0&controls=1&enablejsapi=1" 
+                    src="https://www.youtube.com/embed/5qap5aO4i9A?modestbranding=1&rel=0&controls=1" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                     allowfullscreen>
             </iframe>
@@ -347,26 +413,25 @@
             🎧 Đang phát: Lofi chill mặc định
         </div>
         <div class="tip">
-            ✨ Dán link YouTube bất kỳ (kể video riêng tư) → bấm "Tải & phát" → nghe trong web.<br>
-            🟢 Nếu lỗi 135/153: tắt AdBlock/uBlock, hoặc dùng link rút gọn youtu.be/...
+            💡 Mỗi khi tải bài hát mới → màu pastel của các nút bấm đổi theo video!<br>
+            🎯 Mục tiêu là số phút còn lại, về 0 sẽ dừng & thông báo<br>
+            🎨 Màu nút luôn sáng, nhẹ nhàng, dễ chịu
         </div>
     </div>
 </div>
 
 <script>
-    // ======================== 1. POMODORO 50/10 ========================
-    let currentMode = 'study';      // 'study' hoặc 'break'
-    let currentSeconds = 50 * 60;   // 50 phút mặc định
+    // ======================== POMODORO TIMER ========================
+    let currentMode = 'study';
+    let currentSeconds = 50 * 60;
     let timerInterval = null;
     let isRunning = false;
     
-    // settings
     let studyMinutes = 50;
     let breakMinutes = 10;
-    let goalTotalMinutes = 120;      // mục tiêu 120 phút học
-    let completedStudyMinutes = 0;   // số phút đã học
+    let goalTotalMinutes = 120;
+    let completedStudyMinutes = 0;
     
-    // DOM elements
     const timerDisplay = document.getElementById('timerDisplay');
     const sessionStatusSpan = document.getElementById('sessionStatus');
     const goalMinutesSpan = document.getElementById('goalMinutes');
@@ -376,92 +441,120 @@
     const autoBreakCheck = document.getElementById('autoBreakCheckbox');
     const soundCheck = document.getElementById('soundCheckbox');
     const presetBtns = document.querySelectorAll('.preset-btn');
+    const dynamicIcon = document.getElementById('dynamicIcon');
     
-    // Cập nhật giao diện thời gian
     function updateTimerUI() {
         let mins = Math.floor(currentSeconds / 60);
         let secs = currentSeconds % 60;
         timerDisplay.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-        if (currentSeconds === 0) timerDisplay.style.color = "#bc6f4c";
-        else timerDisplay.style.color = "#2c6b29";
     }
     
-    // Cập nhật thanh trạng thái + mục tiêu
     function updateStatusAndGoal() {
         if (currentMode === 'study') {
-            sessionStatusSpan.innerHTML = '🎵 Đang học tập';
-            sessionStatusSpan.style.background = "#cbe8ba";
+            sessionStatusSpan.innerHTML = '<span>🎵</span> Đang học tập';
         } else {
-            sessionStatusSpan.innerHTML = '☕️ Đang nghỉ giải lao';
-            sessionStatusSpan.style.background = "#ffe1b9";
+            sessionStatusSpan.innerHTML = '<span>☕️</span> Đang nghỉ';
         }
-        // hiển thị mục tiêu còn lại
         let remainingGoal = Math.max(0, goalTotalMinutes - completedStudyMinutes);
         goalMinutesSpan.textContent = remainingGoal;
-        if (remainingGoal === 0) {
-            sessionStatusSpan.innerHTML = '🎉 HOÀN THÀNH MỤC TIÊU! 🎉';
+        
+        if (remainingGoal === 0 && goalTotalMinutes > 0) {
+            sessionStatusSpan.innerHTML = '<span>🎉</span> HOÀN THÀNH!';
+            if (isRunning) {
+                stopTimer();
+            }
         }
     }
     
-    // Kết thúc 1 phiên
+    function showToast(message) {
+        let toast = document.createElement('div');
+        toast.className = 'toast-notify';
+        toast.innerHTML = message;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3500);
+    }
+    
+    function playBeep() {
+        if (!soundCheck.checked) return;
+        try {
+            let ctx = new (window.AudioContext || window.webkitAudioContext)();
+            let osc = ctx.createOscillator();
+            let gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.frequency.value = 880;
+            gain.gain.value = 0.2;
+            osc.start();
+            gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.8);
+            osc.stop(ctx.currentTime + 0.6);
+        } catch(e) {}
+    }
+    
     function endSession() {
         if (currentMode === 'study') {
-            // cộng dồn số phút đã học trong phiên vừa rồi
             let studiedThisSession = studyMinutes;
+            let remainingGoal = goalTotalMinutes - completedStudyMinutes;
+            
+            if (studiedThisSession > remainingGoal) {
+                studiedThisSession = remainingGoal;
+            }
+            
             completedStudyMinutes += studiedThisSession;
             updateStatusAndGoal();
             
-            // kiểm tra mục tiêu
             if (completedStudyMinutes >= goalTotalMinutes) {
                 stopTimer();
-                if (soundCheck.checked) playBeep();
-                sessionStatusSpan.innerHTML = '🎉 HOÀN THÀNH MỤC TIÊU! 🎉';
+                playBeep();
+                showToast('🎉 CHÚC MỪNG! Bạn đã hoàn thành mục tiêu 120 phút học tập! 🎉');
+                sessionStatusSpan.innerHTML = '<span>🎉</span> HOÀN THÀNH!';
                 timerDisplay.textContent = "00:00";
                 return;
             }
             
-            // Tự động chuyển sang nghỉ nếu bật
             if (autoBreakCheck.checked) {
                 currentMode = 'break';
                 currentSeconds = breakMinutes * 60;
                 updateTimerUI();
                 updateStatusAndGoal();
-                if (soundCheck.checked) playBeep();
-                // vẫn chạy timer tiếp nếu đang chạy
+                playBeep();
+                showToast(`☕️ Học xong! Nghỉ ${breakMinutes} phút nhé!`);
                 if (isRunning) {
-                    // restart timer mới (giữ interval cũ rồi set lại)
                     stopTimer();
                     isRunning = false;
                     startTimer();
                 }
             } else {
                 stopTimer();
-                if (soundCheck.checked) playBeep();
-                updateTimerUI();
+                playBeep();
+                showToast(`✅ Hoàn thành ${studyMinutes} phút học!`);
             }
         } 
         else if (currentMode === 'break') {
-            // hết nghỉ, chuyển về học
             currentMode = 'study';
             currentSeconds = studyMinutes * 60;
             updateTimerUI();
             updateStatusAndGoal();
+            playBeep();
+            showToast(`🎵 Hết nghỉ! Bắt đầu ${studyMinutes} phút học tiếp nào!`);
             if (autoBreakCheck.checked && completedStudyMinutes < goalTotalMinutes) {
                 if (isRunning) {
                     stopTimer();
                     isRunning = false;
                     startTimer();
                 }
-            } else {
-                if (soundCheck.checked) playBeep();
             }
         }
         updateTimerUI();
     }
     
-    // Hàm chạy timer
     function startTimer() {
         if (isRunning) return;
+        
+        if (completedStudyMinutes >= goalTotalMinutes) {
+            showToast('🎉 Bạn đã hoàn thành mục tiêu! Nhấn Reset để bắt đầu lại.');
+            return;
+        }
+        
         if (currentSeconds <= 0) {
             endSession();
             return;
@@ -489,19 +582,21 @@
         isRunning = false;
     }
     
-    function pauseTimer() { stopTimer(); }
+    function pauseTimer() { 
+        stopTimer();
+        showToast('⏸ Đã tạm dừng');
+    }
     
     function resetFullSession() {
         stopTimer();
-        // reset về cài đặt hiện tại (studyMinutes, breakMinutes)
         currentMode = 'study';
         currentSeconds = studyMinutes * 60;
         completedStudyMinutes = 0;
         updateTimerUI();
         updateStatusAndGoal();
+        showToast('🔄 Đã reset toàn bộ phiên học');
     }
     
-    // Thay đổi preset
     function changePreset(study, breakTime) {
         stopTimer();
         studyMinutes = study;
@@ -511,54 +606,67 @@
         completedStudyMinutes = 0;
         updateTimerUI();
         updateStatusAndGoal();
-        // active style cho preset
         presetBtns.forEach(btn => {
             let s = parseInt(btn.dataset.study);
             let b = parseInt(btn.dataset.break);
-            if (s === study && b === breakTime) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
+            if (s === study && b === breakTime) btn.classList.add('active');
+            else btn.classList.remove('active');
         });
+        showToast(`Đã chuyển sang chế độ ${study}/${breakTime}`);
     }
     
-    // Phát tiếng beep
-    function playBeep() {
-        try {
-            let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            let oscillator = audioCtx.createOscillator();
-            let gain = audioCtx.createGain();
-            oscillator.connect(gain);
-            gain.connect(audioCtx.destination);
-            oscillator.frequency.value = 880;
-            gain.gain.value = 0.2;
-            oscillator.start();
-            gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.8);
-            oscillator.stop(audioCtx.currentTime + 0.6);
-        } catch(e) { console.log("beep error"); }
-    }
-    
-    // Sự kiện nút
     startBtn.addEventListener('click', startTimer);
     pauseBtn.addEventListener('click', pauseTimer);
     resetBtn.addEventListener('click', resetFullSession);
-    
     presetBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            let study = parseInt(btn.dataset.study);
-            let breakVal = parseInt(btn.dataset.break);
-            if (!isNaN(study) && !isNaN(breakVal)) {
-                changePreset(study, breakVal);
-            }
+            let s = parseInt(btn.dataset.study);
+            let b = parseInt(btn.dataset.break);
+            if (!isNaN(s) && !isNaN(b)) changePreset(s, b);
         });
     });
     
-    // ======================== 2. NHẠC YOUTUBE NHÚNG ========================
+    // ======================== LẤY MÀU & ĐỔI MÀU NÚT PASTEL ========================
     const youtubeLinkInput = document.getElementById('youtubeLink');
     const loadMusicBtn = document.getElementById('loadMusicBtn');
     const youtubeIframe = document.getElementById('youtubePlayer');
     const nowPlayingText = document.getElementById('nowPlayingText');
+    const colorPreview = document.getElementById('colorPreview');
+    
+    function getIconByColor(r, g, b) {
+        if (r > g && r > b) return '🍎';
+        if (g > r && g > b) return '🥑';
+        if (b > r && b > g) return '💙';
+        if (r > 200 && g > 150 && b < 150) return '🍊';
+        if (r > 200 && g > 180 && b < 200) return '🍋';
+        if (r > 150 && g < 100 && b > 150) return '🍇';
+        if (r > 200 && g < 150 && b > 150) return '🌸';
+        return '🌟';
+    }
+    
+    // Chuyển đổi màu RGB thành tông pastel sáng hơn
+    function toPastelColor(r, g, b) {
+        // Tăng độ sáng, giảm độ bão hòa để có màu pastel
+        let pastelR = Math.min(255, r + 70);
+        let pastelG = Math.min(255, g + 70);
+        let pastelB = Math.min(255, b + 70);
+        // Đảm bảo màu không quá sáng đến mức trắng
+        pastelR = Math.max(200, pastelR);
+        pastelG = Math.max(200, pastelG);
+        pastelB = Math.max(200, pastelB);
+        return `rgb(${pastelR}, ${pastelG}, ${pastelB})`;
+    }
+    
+    function toPastelHover(r, g, b) {
+        // Màu hover tối hơn một chút
+        let hoverR = Math.min(255, r + 45);
+        let hoverG = Math.min(255, g + 45);
+        let hoverB = Math.min(255, b + 45);
+        hoverR = Math.max(180, hoverR);
+        hoverG = Math.max(180, hoverG);
+        hoverB = Math.max(180, hoverB);
+        return `rgb(${hoverR}, ${hoverG}, ${hoverB})`;
+    }
     
     function extractVideoId(url) {
         let str = url.trim();
@@ -573,17 +681,131 @@
         return null;
     }
     
+    async function getDominantColorFromThumbnail(videoId) {
+        const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+        const fallbackUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+        
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.crossOrigin = "Anonymous";
+            
+            img.onload = function() {
+                try {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.drawImage(img, 0, 0, img.width, img.height);
+                    const imageData = ctx.getImageData(0, 0, img.width, img.height);
+                    const data = imageData.data;
+                    const colorCounts = {};
+                    let step = 15;
+                    
+                    for (let i = 0; i < data.length; i += step * 4) {
+                        const r = data[i];
+                        const g = data[i+1];
+                        const b = data[i+2];
+                        if (r + g + b < 100 || r + g + b > 720) continue;
+                        const key = `${Math.round(r/15)*15},${Math.round(g/15)*15},${Math.round(b/15)*15}`;
+                        colorCounts[key] = (colorCounts[key] || 0) + 1;
+                    }
+                    
+                    let maxCount = 0;
+                    let dominantKey = "200,200,180";
+                    for (const [key, count] of Object.entries(colorCounts)) {
+                        if (count > maxCount) {
+                            maxCount = count;
+                            dominantKey = key;
+                        }
+                    }
+                    
+                    const [r, g, b] = dominantKey.split(',').map(Number);
+                    resolve({ r, g, b });
+                } catch(e) {
+                    resolve({ r: 200, g: 220, b: 180 });
+                }
+            };
+            
+            img.onerror = function() {
+                const fallbackImg = new Image();
+                fallbackImg.crossOrigin = "Anonymous";
+                fallbackImg.onload = function() {
+                    try {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        canvas.width = fallbackImg.width;
+                        canvas.height = fallbackImg.height;
+                        ctx.drawImage(fallbackImg, 0, 0);
+                        const imageData = ctx.getImageData(0, 0, fallbackImg.width, fallbackImg.height);
+                        const data = imageData.data;
+                        let sumR = 0, sumG = 0, sumB = 0, count = 0;
+                        for (let i = 0; i < data.length; i += 40) {
+                            sumR += data[i];
+                            sumG += data[i+1];
+                            sumB += data[i+2];
+                            count++;
+                        }
+                        resolve({ r: sumR / count, g: sumG / count, b: sumB / count });
+                    } catch(e) {
+                        resolve({ r: 200, g: 220, b: 180 });
+                    }
+                };
+                fallbackImg.onerror = () => resolve({ r: 200, g: 220, b: 180 });
+                fallbackImg.src = fallbackUrl;
+            };
+            img.src = thumbnailUrl;
+        });
+    }
+    
+    async function updateThemeByVideo(videoId) {
+        try {
+            const { r, g, b } = await getDominantColorFromThumbnail(videoId);
+            
+            // Chuyển đổi màu chính thành pastel sáng cho nút bấm
+            const btnPastel = toPastelColor(r, g, b);
+            const btnPastelHover = toPastelHover(r, g, b);
+            
+            // Màu nền chính của web (đậm hơn một chút để tương phản)
+            const primaryStart = `rgb(${Math.min(r + 25, 255)}, ${Math.min(g + 20, 255)}, ${Math.min(b + 15, 255)})`;
+            const primaryEnd = `rgb(${Math.max(r - 20, 40)}, ${Math.max(g - 25, 35)}, ${Math.max(b - 30, 30)})`;
+            const cardBg = `rgba(${r + 35}, ${g + 40}, ${b + 35}, 0.92)`;
+            const accentDark = `rgb(${Math.max(r - 65, 25)}, ${Math.max(g - 60, 30)}, ${Math.max(b - 55, 25)})`;
+            const statusBg = `rgb(${Math.min(r + 35, 255)}, ${Math.min(g + 40, 255)}, ${Math.min(b + 35, 255)})`;
+            
+            document.documentElement.style.setProperty('--primary-bg-start', primaryStart);
+            document.documentElement.style.setProperty('--primary-bg-end', primaryEnd);
+            document.documentElement.style.setProperty('--card-bg', cardBg);
+            document.documentElement.style.setProperty('--btn-pastel', btnPastel);
+            document.documentElement.style.setProperty('--btn-pastel-hover', btnPastelHover);
+            document.documentElement.style.setProperty('--accent-dark', accentDark);
+            document.documentElement.style.setProperty('--status-bg', statusBg);
+            
+            const newIcon = getIconByColor(r, g, b);
+            dynamicIcon.textContent = newIcon;
+            
+            colorPreview.innerHTML = `🎨 Màu pastel theo video | Icon: ${newIcon} | RGB: ${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)}`;
+            
+        } catch(e) {
+            console.log("Lỗi cập nhật màu:", e);
+            colorPreview.innerHTML = "🎨 Không thể lấy màu, giữ mặc định";
+        }
+    }
+    
     function loadYouTubeMusic(rawInput) {
         let videoId = extractVideoId(rawInput);
         if (!videoId) {
             nowPlayingText.innerHTML = '❌ Không tìm thấy ID video. Dùng link youtu.be/... hoặc ?v=...';
             return false;
         }
+        
         let origin = window.location.origin;
         let newSrc = `https://www.youtube.com/embed/${videoId}?autoplay=1&modestbranding=1&rel=0&controls=1&enablejsapi=1&origin=${encodeURIComponent(origin)}`;
         youtubeIframe.src = newSrc;
+        
+        updateThemeByVideo(videoId);
+        
         let display = rawInput.length > 55 ? rawInput.substring(0, 52) + "..." : rawInput;
-        nowPlayingText.innerHTML = `🎧 Đang phát: ${display}<br>✨ ID: ${videoId}`;
+        nowPlayingText.innerHTML = `🎧 Đang phát: ${display}<br>✨ Màu pastel của nút đã đổi theo video! ✨`;
         return true;
     }
     
@@ -600,10 +822,8 @@
         if (e.key === 'Enter') loadMusicBtn.click();
     });
     
-    // Khởi tạo mặc định
     updateTimerUI();
     updateStatusAndGoal();
-    // set active 50/10
     document.querySelector('.preset-btn[data-study="50"]').classList.add('active');
 </script>
 </body>
